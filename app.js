@@ -15,11 +15,19 @@ const short = require('short-uuid')
 // Import .env package (npm i dotenv)
 // Require .env config file to access contents. See syntax with port below
 require("dotenv").config()
+const mongoose = require('mongoose')
 
 app.use(express.json())
 const data = fs.readFileSync('./data.json','utf-8')
 const userData = JSON.parse(data)
 // console.log(userData)
+
+/** mongodb connection */
+mongoose.connect(process.env.DB_URL).then((connection => {
+    console.log("Connected to DB")
+})).catch((err)=>{
+    console.log(err)
+})
 
 app.use((req,res,next) => {
     // middleware to check if user sent request with id
