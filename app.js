@@ -1,4 +1,4 @@
-//
+
 //Aside: To move code up and down in between indented scopes, use option up and down.
 //
 
@@ -12,7 +12,9 @@ const fs = require('fs')
 // short-uuid is a node package that can be used to generate IDs
 const short = require('short-uuid')
 
-
+// Import .env package (npm i dotenv)
+// Require .env config file to access contents. See syntax with port below
+require("dotenv").config()
 
 app.use(express.json())
 const data = fs.readFileSync('./data.json','utf-8')
@@ -21,6 +23,7 @@ const userData = JSON.parse(data)
 
 app.use((req,res,next) => {
     // middleware to check if user sent request with id
+    next()
 })
 
 /** Route Handlers */
@@ -113,4 +116,4 @@ app.post('/api/users', createUserHandler)
 // Here, we are trying to obtain the information for a user with a given ID number that we call
 app.get('/api/users/:id', getUserByIDHandler)
 
-app.listen(3000, () => console.log('Listening at 3000'))
+app.listen(process.env.PORT, () => console.log(`Listening at ${process.env.PORT}`))
