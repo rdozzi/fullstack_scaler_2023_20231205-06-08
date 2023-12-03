@@ -23,6 +23,8 @@ app.use((req,res,next) => {
     // middleware to check if user sent request with id
 })
 
+/** Route Handlers */
+
 function getUserHandler(req,res){
     try{
         if(userData.length === 0){
@@ -100,6 +102,8 @@ function getUserByIDHandler (req,res){
         })
     }
 }
+
+/** Routes */
 
 app.get('/api/users',getUserHandler)
 
