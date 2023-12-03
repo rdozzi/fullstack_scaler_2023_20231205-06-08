@@ -83,13 +83,7 @@ function createUserHandler(req,res){
     }
 }
 
-app.get('/api/users',getUserHandler)
-
-// (req,res) => {} is the callback function for an event
-app.post('/api/users', createUserHandler)
-
-// Here, we are trying to obtain the information for a user with a given ID number that we call
-app.get('/api/users/:id', (req, res) => {
+function getUserByIDHandler (req,res){
     console.log(req.params)
     const {id} = req.params //Deconstruction
     try{
@@ -105,6 +99,14 @@ app.get('/api/users/:id', (req, res) => {
             data: err.message
         })
     }
-})
+}
+
+app.get('/api/users',getUserHandler)
+
+// (req,res) => {} is the callback function for an event
+app.post('/api/users', createUserHandler)
+
+// Here, we are trying to obtain the information for a user with a given ID number that we call
+app.get('/api/users/:id', getUserByIDHandler)
 
 app.listen(3000, () => console.log('Listening at 3000'))
