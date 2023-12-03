@@ -43,10 +43,7 @@ function getUserHandler(req,res){
     }
 }
 
-app.get('/api/users',getUserHandler)
-
-// (req,res) => {} is the callback function for an event
-app.post('/api/users', (req, res) => {
+function createUserHandler(req,res){
     try{
         const id = short.generate()
         const userDetails = req.body
@@ -84,7 +81,12 @@ app.post('/api/users', (req, res) => {
             data: err.message
         })
     }
-})
+}
+
+app.get('/api/users',getUserHandler)
+
+// (req,res) => {} is the callback function for an event
+app.post('/api/users', createUserHandler)
 
 // Here, we are trying to obtain the information for a user with a given ID number that we call
 app.get('/api/users/:id', (req, res) => {
