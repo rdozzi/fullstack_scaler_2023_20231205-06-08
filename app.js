@@ -23,10 +23,9 @@ app.use((req,res,next) => {
     // middleware to check if user sent request with id
 })
 
-// In general, use a try/catch blocks for your callback functions
-app.get('/api/users',(req,res) => {
+function getUserHandler(req,res){
     try{
-        if(userData.length == 0){
+        if(userData.length === 0){
             throw new Error('No Data')
         } else{
             res.status(200).json({
@@ -42,7 +41,9 @@ app.get('/api/users',(req,res) => {
         })
 
     }
-})
+}
+
+app.get('/api/users',getUserHandler)
 
 // (req,res) => {} is the callback function for an event
 app.post('/api/users', (req, res) => {
