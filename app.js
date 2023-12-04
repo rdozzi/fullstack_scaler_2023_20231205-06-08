@@ -118,12 +118,12 @@ async function createUserHandler(req,res){
     }
 }
 
-async function getUserByIDHandler (req,res){
+async function getUserByIdHandler (req,res){
     console.log(req.params)
     const {id} = req.params //Deconstruction
     try{
     
-        const user = await User.findByID(id)
+        const user = await User.findById(id)
         if(!user){
             throw new Error('No user found!')
         } else {
@@ -141,6 +141,15 @@ async function getUserByIDHandler (req,res){
     }
 }
 
+// Recall that interactions are always asynchronous and we need to wait for them. That's why we need async
+// async function updateUserByIdHandler(req,res){
+//     try{
+//         const {id} = req.params;
+//         const userDetails = req.body;
+//         const updatedUser
+//     }
+// }
+
 /** Routes */
 
 app.get('/api/users',getUserHandler)
@@ -149,6 +158,9 @@ app.get('/api/users',getUserHandler)
 app.post('/api/users', createUserHandler)
 
 // Here, we are trying to obtain the information for a user with a given ID number that we call
-app.get('/api/users/:id', getUserByIDHandler)
+app.get('/api/users/:id', getUserByIdHandler)
+
+// We patch instead of put because we want to update only one entry vs the entire object
+// app.patch("/api/users/:id", updateUserByIdHandler)
 
 app.listen(process.env.PORT, () => console.log(`Listening at ${process.env.PORT}`))
