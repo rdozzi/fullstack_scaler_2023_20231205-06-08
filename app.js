@@ -163,6 +163,26 @@ async function updateUserByIdHandler(req,res){
     }
 }
 
+async function deleteUsersByIdHandler(req,res){
+    try{
+        const {id} = req.params;
+        const deletedUser = await User.findByIdAndDelete(id);
+        if(!deletedUser){
+            throw new error('No User Found!')
+        }else {
+            res.status(200).json({
+                message: "User was deleted successfully",
+                data: deletedUser
+            });
+        }
+    }catch(err){
+        res.status(500).json({
+            message: "error",
+            data: err.message
+        });
+    }
+}
+
 /** Routes */
 
 app.get('/api/users',getUserHandler)
@@ -175,5 +195,7 @@ app.get('/api/users/:id', getUserByIdHandler)
 
 // We patch instead of put because we want to update only one entry vs the entire object
 app.patch("/api/users/:id", updateUserByIdHandler)
+
+app.delete("/api/users/:id", deleteUsersByIdHandler);
 
 app.listen(process.env.PORT, () => console.log(`Listening at ${process.env.PORT}`))
