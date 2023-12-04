@@ -77,17 +77,18 @@ const User = mongoose.model("User",userSchema)
 
 /** Route Handlers */
 
-function getUserHandler(req,res){
+async function getUserHandler(req,res){
     try{
+        const userData = await User.find()
         if(userData.length === 0){
-            throw new Error('No Data')
-        } else{
+            throw new Error('No users found')
+        } else {
             res.status(200).json({
                 message: 'success',
-                data: userDetails
+                data: userData
             })
-            
         }
+
     }catch(err){
         res.status(500).json({
             message: 'error',
@@ -117,16 +118,21 @@ async function createUserHandler(req,res){
     }
 }
 
-function getUserByIDHandler (req,res){
+async function getUserByIDHandler (req,res){
     console.log(req.params)
     const {id} = req.params //Deconstruction
     try{
-        const user = userData.find((user) => user.id == id)
-        console.log("user", user)
-        res.status(200).json({
-            message: "success",
-            data: user
-        })
+    
+        const user = await User.findByID(id)
+        if(!user){
+            throw new Error('No user found!')
+        } else {
+            res.status(200).json({
+                message: "success",
+                data: user,
+            })
+        }
+
     }catch(err){
         res.status(500).json({
             message: "error",
