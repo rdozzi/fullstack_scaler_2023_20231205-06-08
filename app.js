@@ -72,6 +72,9 @@ const userSchema = new mongoose.Schema({
     }
 })
 
+/** Models */
+const User = mongoose.model("User",userSchema)
+
 /** Route Handlers */
 
 function getUserHandler(req,res){
@@ -94,37 +97,17 @@ function getUserHandler(req,res){
     }
 }
 
-function createUserHandler(req,res){
+// Update the function to an async function to call user information from the db
+// 
+async function createUserHandler(req,res){
     try{
-        const id = short.generate()
-        const userDetails = req.body
-        userDetails.id = id
 
-        // This can be a bit combersome to write for every post.
-        // Use middleware with next statement to check for this in general
-        const isEmpty = Object.keys(userDetails).length === 0
-        
-        
-        if(isEmpty){
-            throw new Error("No data")
-        }
-        console.log("userDetails", userDetails)
-        userData.push(userDetails)
-        fs.writeFile("./data.json", JSON.stringify(userData), (err) => {
-            if(err){
-                throw new Error("Error writing file")
-            }else {
-                res.status(200).json({
-                    message: "success",
-                    data: userDetails
-                })
-            }
+        const userDetails = req.body
+        const user = await User.create(userDetails)
+        res.status(201).json({
+            message:"user was created successfully",
+            data:user
         })
-        // res.json({
-        //     message: "success",
-        //     status: 200,
-        //     data: userDetails
-        // })
 
     } catch(err){
         res.status(500).json({
