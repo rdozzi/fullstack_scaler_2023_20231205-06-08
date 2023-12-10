@@ -24,7 +24,7 @@ const getAllFactory = (elementModel) => async function(req,res){
         } else {
             res.status(200).json({
                 message: 'success',
-                data: Data
+                data: data
             })
         }
 
