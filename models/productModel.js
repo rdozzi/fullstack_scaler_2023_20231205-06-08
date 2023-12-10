@@ -36,7 +36,26 @@ const productSchema = new mongoose.Schema({
             },
             message: "Discount must be less than price"
         }
+    },
+
+    description: {
+        type:String,
+        required:[true,'A product must have a description']
     }
+})
+
+const validProductCategories = ['electronics','stationary','clothing','furniture']
+productSchema.pre('save',function(next){
+    //Check if there is an invalid category
+    //If invalid present throw error
+    //Else Proceed
+    const invalidCategories = this.categories.filter(category=>!validProductCategories.includes(category))
+    if(invalidCategories.length > 0){
+        throw new Error(`Invalid categories ${invalidCategories.join(",")}`)
+    } else{
+        next()
+    }
+
 })
 
 const Product = mongoose.model('Product',productSchema)

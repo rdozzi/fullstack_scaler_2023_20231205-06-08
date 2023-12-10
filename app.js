@@ -71,5 +71,12 @@ app.use("/api/users",userRouter)
 
 app.get("/api/products",getProductHandler)
 app.post("/api/products",createProductHandler)
+app.use("/search", (req,res) => {
+    console.log(req.query)
+    res.status(200).json({
+        message:"success",
+        data: req.query
+    })
+})
 
 app.listen(process.env.PORT, () => console.log(`Listening at ${process.env.PORT}`))
