@@ -15,14 +15,22 @@ const fs = require('fs')
 // Import .env package (npm i dotenv)
 // Require .env config file to access contents. See syntax with port below
 require("dotenv").config()
+
 const mongoose = require("mongoose")
+
 const User = require("./models/userModel")
+
+const Product = require("./models/productModel")
+
 const {getUserHandler, 
     createUserHandler, 
     getUserByIdHandler, 
     updateUserByIdHandler, 
     deleteUsersByIdHandler,
     checkInput} = require('./controller/userController')
+
+const {getProductHandler,
+    createProductHandler} = require("./controller/productController")
 
 
 app.use(express.json())
@@ -40,7 +48,7 @@ app.use((req,res,next) => {
     next()
 })
 
-/** Routes */
+/** User Routes */
 
 app.get('/api/users',getUserHandler)
 
@@ -55,5 +63,10 @@ app.get('/api/users/:id', getUserByIdHandler)
 app.patch("/api/users/:id", updateUserByIdHandler)
 
 app.delete("/api/users/:id", deleteUsersByIdHandler);
+
+/** Product Routes */
+
+app.get("/api/products",getProductHandler)
+app.post("/api/products",createProductHandler)
 
 app.listen(process.env.PORT, () => console.log(`Listening at ${process.env.PORT}`))
