@@ -17,7 +17,11 @@ const fs = require('fs')
 require("dotenv").config()
 const mongoose = require("mongoose")
 const User = require("./models/userModel")
-const {getUserHandler, createUserHandler, getUserByIdHandler, updateUserByIdHandler, deleteUsersByIdHandler} = require('./controller/userController')
+const {getUserHandler, 
+    createUserHandler, 
+    getUserByIdHandler, 
+    updateUserByIdHandler, 
+    deleteUsersByIdHandler} = require('./controller/userController')
 
 
 app.use(express.json())
