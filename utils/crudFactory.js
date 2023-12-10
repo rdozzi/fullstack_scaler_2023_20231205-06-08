@@ -102,7 +102,7 @@ const updateElementByIdFactory = (elementModel) => async function(req,res){
     }
 }
 
-const deleteElementsByIdFactory = (elementModel) => async function(req,res){
+const deleteElementByIdFactory = (elementModel) => async function(req,res){
     try{
         const {id} = req.params;
         const deletedData = await elementModel.findByIdAndDelete(id);
@@ -128,5 +128,5 @@ module.exports = {
     createFactory,
     getElementByIdFactory,
     updateElementByIdFactory,
-    deleteElementsByIdFactory
+    deleteElementByIdFactory
 }
