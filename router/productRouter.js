@@ -10,11 +10,31 @@ const {getProductHandler,
     } = require("../controller/productController")
 const {checkInput} = require("../utils/crudFactory")
 
-/** User Routes */
-userRouter.get('/',getProductHandler)
-userRouter.post('/', checkInput, createProductHandler)
-userRouter.get('/:id',getProductByIdHandler)
-userRouter.patch('/:id',updateProductByIdHandler)
-userRouter.delete('/:id',deleteProductByIdHandler)
+/** Product Routes */
+productRouter.get('/',getProductHandler)
+productRouter.post('/', checkInput, createProductHandler)
+productRouter.get('/:id',getProductByIdHandler)
+productRouter.patch('/:id',updateProductByIdHandler)
+productRouter.delete('/:id',deleteProductByIdHandler)
 
+async function getAllProduts(req, res) {
+    console.log(req.query);
+    const { sort, select } = req.query;
+    let queryPromise = Product.find()
+    console.log("sort",sort)  
+    if (sort) {
+        const [sortParam, order] = sort.split(" ");
+        if (order === "asc") {
+          queryPromise = queryPromise.sort(sortParam);
+        } else {
+          queryPromise = queryPromise.sort(`-${sortParam}`);
+        }
+      }
+      const result = await queryPromise;
+      res.status(200).json({
+        message: "success",
+        data: result,
+      })
+
+}
 module.exports = productRouter
