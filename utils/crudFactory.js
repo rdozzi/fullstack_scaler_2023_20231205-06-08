@@ -85,13 +85,15 @@ const updateElementByIdFactory = (elementModel) => async function(req,res){
     try{
         const {id} = req.params;
         const details = req.body;
-        const updatedData = await elementModel.findByIdAndUpdate(id,details,{new: true}) // {new: true} returns object/document after its updated
+        const updatedData = await elementModel.findByIdAndUpdate(id, { $set: details, $inc: {__v: 1} },{
+            new: true,
+        }) // {new: true} returns object/document after its updated
         if(!updatedData){
             throw new error('No data Found!')
         }else {
             res.status(200).json({
                 message: "Data was updated successfully",
-                data: updatedUser
+                data: updatedData
             });
         }
     }catch(err){
