@@ -43,10 +43,10 @@ const createFactory = (elementModel) => async function createUserHandler(req,res
     try{
 
         const details = req.body
-        const data = await elementtModel.create(userDetails)
+        const data = await elementModel.create(details)
         res.status(201).json({
             message:"data was created successfully",
-            data:user
+            data: data
         })
 
     } catch(err){
@@ -57,7 +57,7 @@ const createFactory = (elementModel) => async function createUserHandler(req,res
     }
 }
 
-const getElementByIdHandler = (elementModel) => async function(req,res){
+const getElementByIdFactory = (elementModel) => async function(req,res){
     // console.log(req.params)
     const {id} = req.params //Deconstruction
     try{
@@ -81,7 +81,7 @@ const getElementByIdHandler = (elementModel) => async function(req,res){
 }
 
 // Recall that interactions are always asynchronous and we need to wait for them. That's why we need async
-const updateElementByIdHandler = (elementModel) => async function(req,res){
+const updateElementByIdFactory = (elementModel) => async function(req,res){
     try{
         const {id} = req.params;
         const details = req.body;
@@ -102,7 +102,7 @@ const updateElementByIdHandler = (elementModel) => async function(req,res){
     }
 }
 
-const deleteElementsByIdHandler = (elementModel) => async function(req,res){
+const deleteElementsByIdFactory = (elementModel) => async function(req,res){
     try{
         const {id} = req.params;
         const deletedData = await elementModel.findByIdAndDelete(id);
@@ -126,7 +126,7 @@ module.exports = {
     checkInput,
     getAllFactory,
     createFactory,
-    getElementByIdHandler,
-    updateElementByIdHandler,
-    deleteElementsByIdHandler
+    getElementByIdFactory,
+    updateElementByIdFactory,
+    deleteElementsByIdFactory
 }
