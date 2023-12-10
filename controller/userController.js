@@ -4,7 +4,7 @@ const {checkInput,
     createFactory, 
     getElementByIdFactory,
     updateElementByIdFactory,
-    deleteElementsByIdFactory} = require("../utils/crudFactory")
+    deleteElementByIdFactory} = require("../utils/crudFactory")
 
 // Called from crudFactory
 // const checkInput = function (req,res,next){
@@ -118,7 +118,7 @@ const updateUserByIdHandler = updateElementByIdFactory(User)
 //     }
 // }
 
-const deleteUsersByIdHandler = deleteElementsByIdFactory(User)
+const deleteUserByIdHandler = deleteElementByIdFactory(User)
 
 // DeleteUsersByIdHandler
 // async function deleteUsersByIdHandler(req,res){
@@ -146,6 +146,6 @@ module.exports = {
     createUserHandler,
     getUserByIdHandler,
     updateUserByIdHandler,
-    deleteUsersByIdHandler,
+    deleteUserByIdHandler,
     checkInput
 }
