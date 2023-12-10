@@ -26,12 +26,13 @@ const {getUserHandler,
     createUserHandler, 
     getUserByIdHandler, 
     updateUserByIdHandler, 
-    deleteUsersByIdHandler,
+    deleteUserByIdHandler,
     checkInput} = require('./controller/userController')
 
 const {getProductHandler,
     createProductHandler} = require("./controller/productController")
 
+const userRouter = require("./router/userRouter")
 
 app.use(express.json())
 // console.log(userData)
@@ -50,19 +51,21 @@ app.use((req,res,next) => {
 
 /** User Routes */
 
-app.get('/api/users',getUserHandler)
+app.use("/api/users",userRouter)
+
+// app.get('/api/users',getUserHandler)
 
 // (req,res) => {} is the callback function for an event
 // CHAINED ('chaining') checkInput as part of creating a user
-app.post('/api/users', checkInput, createUserHandler)
+// app.post('/api/users', checkInput, createUserHandler)
 
 // Here, we are trying to obtain the information for a user with a given ID number that we call
-app.get('/api/users/:id', getUserByIdHandler)
+// app.get('/api/users/:id', getUserByIdHandler)
 
 // We patch instead of put because we want to update only one entry vs the entire object
-app.patch("/api/users/:id", updateUserByIdHandler)
+// app.patch("/api/users/:id", updateUserByIdHandler)
 
-app.delete("/api/users/:id", deleteUsersByIdHandler);
+// app.delete("/api/users/:id", deleteUserByIdHandler);
 
 /** Product Routes */
 
