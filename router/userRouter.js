@@ -9,8 +9,11 @@ const {getUserHandler,
     deleteUserByIdHandler,} = require("../controller/userController")
 const {checkInput} = require("../utils/crudFactory")
 
+/** User Routes */
 userRouter.get('/',getUserHandler)
 userRouter.post('/', checkInput, createUserHandler)
 userRouter.get('/:id',getUserByIdHandler)
 userRouter.patch('/:id',updateUserByIdHandler)
 userRouter.delete('/:id',deleteUserByIdHandler)
+
+module.exports = userRouter
