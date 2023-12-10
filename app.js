@@ -21,7 +21,8 @@ const {getUserHandler,
     createUserHandler, 
     getUserByIdHandler, 
     updateUserByIdHandler, 
-    deleteUsersByIdHandler} = require('./controller/userController')
+    deleteUsersByIdHandler,
+    checkInput} = require('./controller/userController')
 
 
 app.use(express.json())
@@ -44,7 +45,8 @@ app.use((req,res,next) => {
 app.get('/api/users',getUserHandler)
 
 // (req,res) => {} is the callback function for an event
-app.post('/api/users', createUserHandler)
+// CHAINED ('chaining') checkInput as part of creating a user
+app.post('/api/users', checkInput, createUserHandler)
 
 // Here, we are trying to obtain the information for a user with a given ID number that we call
 app.get('/api/users/:id', getUserByIdHandler)
