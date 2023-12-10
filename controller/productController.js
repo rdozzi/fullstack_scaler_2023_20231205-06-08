@@ -4,7 +4,7 @@ const {checkInput,
     createFactory, 
     getElementByIdFactory,
     updateElementByIdFactory,
-    deleteElementsByIdFactory} = require("../utils/crudFactory")
+    deleteElementByIdFactory} = require("../utils/crudFactory")
 
 // This will replicate the changes to userController
 
@@ -117,7 +117,7 @@ const updateProductByIdHandler = updateElementByIdFactory(Product)
 //     }
 // }
 
-const deleteProductsByIdHandler = deleteElementsByIdFactory(Product)
+const deleteProductByIdHandler = deleteElementByIdFactory(Product)
 
 // async function deleteProductsByIdHandler(req,res){
 //     try{
@@ -144,7 +144,7 @@ module.exports = {
     createProductHandler,
     getProductByIdHandler,
     updateProductByIdHandler,
-    deleteProductsByIdHandler,
+    deleteProductByIdHandler,
     checkInput
 }
 
