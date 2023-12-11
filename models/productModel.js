@@ -23,6 +23,16 @@ const productSchema = new mongoose.Schema({
         type:[String]
     },
 
+    stock: {
+        type:Number,
+        required:[true,'A product must have a stock'],
+    },
+
+    brand:{
+        type:String,
+        required:[true,'A product must have a brand'],
+    },
+
     images: {
         type:[String]
         // Not required
