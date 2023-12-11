@@ -13,11 +13,12 @@ const {checkInput} = require("../utils/crudFactory")
 /** Product Routes */
 productRouter.get('/',getProductHandler)
 productRouter.post('/', checkInput, createProductHandler)
+productRouter.get('/bigBillionDay', getBigBillionDayProducts, getAllProducts)
 productRouter.get('/:id',getProductByIdHandler)
 productRouter.patch('/:id',updateProductByIdHandler)
 productRouter.delete('/:id',deleteProductByIdHandler)
 
-async function getAllProduts(req, res) {
+async function getAllProducts(req, res) {
     console.log(req.query);
     const { sort, select } = req.query;
     let queryPromise = Product.find()
@@ -69,4 +70,10 @@ async function getAllProduts(req, res) {
       data: result,
     });
   }
+
+async function getBigBillionDayProducts(req,res,next){
+  req.query.filter = JSON.stringify({stock: {lte: 10}})
+  next()
+}
+
 module.exports = productRouter
