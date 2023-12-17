@@ -8,6 +8,7 @@ const app = express()
 app.use(cookieParser())
 
 require("dotenv").config()
+const secretKey = process.env.SECRET_KEY
 
 //home
 //products
@@ -52,7 +53,7 @@ app.get("/signin",(req,res)=>{
     try{
         jwt.sign(
             {data:payload},
-            process.env.SECRET_KEY,
+            secretKey,
             {expiresIn:'1h'},
             function(err,token){
                 if(err){
@@ -69,6 +70,19 @@ app.get("/signin",(req,res)=>{
 
     }catch{
         console.log(err)
+    }
+})
+
+app.get("/verify",(req,res)=>{
+    try{
+        const{token} = req.cookies
+        const decoded = jwt.verify(token,secretKey)
+        res.json({
+            message:"Token Verified",
+            data:decoded
+        })
+    }catch(err){
+
     }
 })
 
