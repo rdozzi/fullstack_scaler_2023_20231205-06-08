@@ -195,12 +195,50 @@ const forgetPassword = async (req,res) => {
     }
 }
 
-const resetPassword = (req,res) => {
-    // 1. Get token from req.body
-    // 2. Get password and confirm password from req.body
-    // 3. Find user by Token
+const resetPassword = async (req,res) => {
     // 4. Update Password and Confirm Password
     // 5. Save User
+    try{
+        // 1. Get token from req.body
+        // 2. Get password and confirm password from req.body
+        const {token,password,email} = req.body
+        const {userId} = req.params
+        const user = await User.findById(userId)
+        if(!user){
+            return res.status(400).json({
+                status:"Fail",
+                message:"User not found"
+            })
+        }
+        // 3. Verify the Validity of Token
+        if(user.token !== token){
+            return res(400).json({
+                status:"fail",
+                message:"Invalid Token"
+            })
+        }else{
+            // check expiry time of token
+            if(user.otpExpiry < Date.now()){
+                return res.status(400).json({
+                    status:"Fail",
+                    message:"Token Expired"
+                })
+            }else{
+                user.password = password
+                user.token = undefined
+                user.otpExpiry = undefined
+                await user.save()
+                res.status(200).json({
+                    status:"success",
+                    message:"Password updated successfully",
+                    data:user
+                })
+            }
+        }
+
+    }catch(error){
+        console.log(error)
+    }
 }
 
 module.exports = {
