@@ -1,9 +1,13 @@
 const express = require("express")
-const cookieParser = require("cookie-parser") 
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken")
+
 // Parse cookie header and populate req.cookies with an object key
 
 const app = express()
 app.use(cookieParser())
+
+require("dotenv").config()
 
 //home
 //products
@@ -41,6 +45,31 @@ app.get('/clearCookie',(req,res) => {
     res.json({
         message: "Cookie Cleared",
     })
+})
+
+app.get("/signin",(req,res)=>{
+    const payload = 1234
+    try{
+        jwt.sign(
+            {data:payload},
+            process.env.SECRET_KEY,
+            {expiresIn:'1h'},
+            function(err,token){
+                if(err){
+                    throw new Error("Error Generating Token")
+                }
+                res.cookie("token",token,{maxAge: 1000*60*60, httpOnly:true,})
+                res.json({
+                    message: "Token Generated",
+                    data:token
+                })
+            }
+
+        )
+
+    }catch{
+        console.log(err)
+    }
 })
 
 app.listen( 3000, () => {
