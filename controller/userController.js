@@ -141,12 +141,43 @@ const deleteUserByIdHandler = deleteElementByIdFactory(User)
 //     }
 // }
 
-const forgetPassword = (req,res) => {
-    // 1. Get the email from req.body
+const otpGenerator = () => {
+    return Math.floor(100000 * Math.random() * 900000)
+}
+
+const forgetPassword = async (req,res) => {
     // 2. Find user by email
     // 3. Generate a random token
     // 4. Save token in Database
     // 5. Send email to user with token
+    try{
+        // 1. Get the email from req.body
+        const {email} = req.body
+        const user = await User.findOne({email})
+        console.log(user)
+        if(!user){
+            return res.status(404).json({
+                status:"Fail",
+                message:"User is not found"
+            })
+        }else{
+            const token = otpGenerator()
+            console.log("Token",token)
+            user.token = token
+            user.otpExpiry = Date.now() * 60 * 60 * 1000
+            console.log("Updated user",user)
+            await user.save()
+            res.status(200).json({
+                status:"Success",
+                message:"Email sent successfully",
+                data:user
+            })
+        }
+
+
+    }catch(error){
+
+    }
 }
 
 const resetPassword = (req,res) => {
@@ -163,5 +194,7 @@ module.exports = {
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
-    checkInput
+    checkInput,
+    forgetPassword,
+    resetPassword,
 }
