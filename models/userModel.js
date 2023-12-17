@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     },
     confirmPassword:{
         type:String,
-        required:true,
+        // required:true, // Removed for forgetPassword
         minlength:8,
         validate: {
             validator: function(){
@@ -43,7 +43,9 @@ const userSchema = new mongoose.Schema({
             },
             message: "Password and Confirm Password should be same."
         }
-    }
+    },
+    token:String,
+    otpExpiry:Date,
 })
 
 userSchema.pre("save",function(){

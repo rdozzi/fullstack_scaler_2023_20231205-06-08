@@ -6,7 +6,9 @@ const {getUserHandler,
     createUserHandler,
     getUserByIdHandler,
     updateUserByIdHandler,
-    deleteUserByIdHandler,} = require("../controller/userController")
+    deleteUserByIdHandler,
+    forgetPassword,
+    resetPassword} = require("../controller/userController")
 
 const {checkInput} = require("../utils/crudFactory")
 
