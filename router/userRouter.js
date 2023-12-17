@@ -7,6 +7,7 @@ const {getUserHandler,
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,} = require("../controller/userController")
+
 const {checkInput} = require("../utils/crudFactory")
 
 /** User Routes */

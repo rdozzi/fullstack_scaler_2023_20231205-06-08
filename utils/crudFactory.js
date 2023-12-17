@@ -1,4 +1,5 @@
-const User = require("../models/userModel")
+// const User = require("../models/userModel")
+
 
 const checkInput = function (req,res,next){
     const details = req.body;
@@ -125,10 +126,10 @@ const deleteElementByIdFactory = (elementModel) => async function(req,res){
 }
 
 module.exports = {
-    checkInput,
     getAllFactory,
     createFactory,
     getElementByIdFactory,
     updateElementByIdFactory,
-    deleteElementByIdFactory
+    deleteElementByIdFactory,
+    checkInput
 }
