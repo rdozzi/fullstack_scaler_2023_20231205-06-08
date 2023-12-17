@@ -1,6 +1,9 @@
 const express = require("express")
+const cookieParser = require("cookie-parser") 
+// Parse cookie header and populate req.cookies with an object key
 
 const app = express()
+app.use(cookieParser())
 
 //home
 //products
@@ -16,6 +19,9 @@ app.get('/', (req,res) => {
 })
 
 app.get('/products', (req,res) => {
+    // console.log(req)
+    console.log(req.cookies)
+    
     res.json({
         message: "Welcome to the products page",
     })
