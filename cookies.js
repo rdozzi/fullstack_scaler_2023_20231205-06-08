@@ -138,7 +138,8 @@ app.post("/login", async (req,res)=>{
                 // create token
                 const token = jwt.sign(
                     {data:user._id},
-                    secretKey
+                    secretKey,
+                    
                 )
                 res.cookie("token",token,{maxAge: 1000*60*60, httpOnly:true})
                 res.json({
@@ -153,6 +154,32 @@ app.post("/login", async (req,res)=>{
     }
     
     // check the user data on the database
+})
+
+const protectRoute = async(req,res,next) => {
+    try{
+        const {token} = req.cookies
+        const decoded = jwt.verify(token,secretKey)
+        const user = await User.findById(decoded.data)
+        if(!user){
+            res.status(400).json({
+                message: "User Not Found"
+            })
+        }else{
+            req.user = user
+            next()
+        }
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
+app.get("/userData",protectRoute,(req,res)=>{
+    res.json({
+        message:"User Data",
+        data: req.user
+    })
 })
 
 app.listen( 3000, () => {
