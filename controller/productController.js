@@ -140,11 +140,11 @@ const deleteProductByIdHandler = deleteElementByIdFactory(Product)
 // }
 
 module.exports = {
+    checkInput, 
     getProductHandler,
     createProductHandler,
     getProductByIdHandler,
     updateProductByIdHandler,
     deleteProductByIdHandler,
-    checkInput
 }
 
