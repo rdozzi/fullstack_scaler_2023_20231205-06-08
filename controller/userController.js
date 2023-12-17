@@ -1,10 +1,12 @@
 const User = require("../models/userModel")
+const { emailBuilder } = require("../nodemailer")
 const {checkInput, 
     getAllFactory, 
     createFactory, 
     getElementByIdFactory,
     updateElementByIdFactory,
     deleteElementByIdFactory} = require("../utils/crudFactory")
+
 
 // Called from crudFactory
 // const checkInput = function (req,res,next){
@@ -167,6 +169,19 @@ const forgetPassword = async (req,res) => {
             user.otpExpiry = Date.now() * 60 * 60 * 1000
             console.log("Updated user",user)
             await user.save()
+            //Send Email to User
+            emailBuilder(user.email,"Reset Password",`Your OTP is ${token}`)
+            .then( () => {
+                console.log("Email sent successfully")
+                res.status(200).json({
+                    status:"Success",
+                    message:"Email sent successfully",
+                    data:user
+                })
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
             res.status(200).json({
                 status:"Success",
                 message:"Email sent successfully",

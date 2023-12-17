@@ -118,4 +118,5 @@ async function emailBuilder(to, subject, text){
 module.exports = {
     sendEmail,
     HTML_TEMPLATE,
+    emailBuilder,
 }
