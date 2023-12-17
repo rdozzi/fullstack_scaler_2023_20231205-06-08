@@ -20,6 +20,7 @@ app.get('/', (req,res) => {
 
 app.get('/products', (req,res) => {
     // console.log(req)
+    res.cookie("products","bestSeller",{maxAge: 1000*60*60*24*7, httpOnly: true, path: "/products"})
     console.log(req.cookies)
     
     const {pageVisited} = req.cookies
@@ -36,8 +37,9 @@ app.get('/products', (req,res) => {
 })
 
 app.get('/clearCookie',(req,res) => {
+    res.clearCookie("pageVisited", {path: "/"})
     res.json({
-        message: "Welcome to the clearCookie page",
+        message: "Cookie Cleared",
     })
 })
 
