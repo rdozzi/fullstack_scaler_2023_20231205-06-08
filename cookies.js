@@ -13,6 +13,15 @@ require("dotenv").config()
 
 const secretKey = process.env.SECRET_KEY
 
+mongoose
+    .connect(process.env.DB_URL)
+    .then((connection) => {
+    console.log("connected to db");
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
 //home
 //products
 //clearCookie
