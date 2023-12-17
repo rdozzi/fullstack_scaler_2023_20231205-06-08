@@ -1,14 +1,15 @@
 const express = require("express")
 
-const productRouter = express.Router()
-
 const {getProductHandler,
     createProductHandler,
     getProductByIdHandler,
     updateProductByIdHandler,
     deleteProductByIdHandler,
     } = require("../controller/productController")
+
 const {checkInput} = require("../utils/crudFactory")
+
+const productRouter = express.Router()
 
 /** Product Routes */
 productRouter.get('/',getProductHandler)
@@ -20,7 +21,7 @@ productRouter.delete('/:id',deleteProductByIdHandler)
 
 async function getAllProducts(req, res) {
     console.log(req.query);
-    const { sort, select } = req.query;
+    const { sort, select, page, limit, filter } = req.query;
     let queryPromise = Product.find()
     console.log("sort",sort)  
     if (sort) {
@@ -72,6 +73,7 @@ async function getAllProducts(req, res) {
   }
 
 async function getBigBillionDayProducts(req,res,next){
+  console.log("getBillionDollarProducts")
   req.query.filter = JSON.stringify({stock: {lte: 10}})
   next()
 }
