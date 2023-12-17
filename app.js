@@ -5,6 +5,16 @@
 const express = require('express')
 const app = express()
 
+// Import .env package (npm i dotenv)
+// Require .env config file to access contents. See syntax with port below
+require("dotenv").config()
+
+const mongoose = require("mongoose")
+
+const userRouter = require("./router/userRouter")   
+const productRouter = require('./router/productRouter')
+
+
 // With this file, we will begin operating on a file system in our folder.
 // Evoke file CRUD capabilities with 
 const fs = require('fs')
@@ -12,11 +22,6 @@ const fs = require('fs')
 // short-uuid is a node package that can be used to generate IDs
 // const short = require('short-uuid')
 
-// Import .env package (npm i dotenv)
-// Require .env config file to access contents. See syntax with port below
-require("dotenv").config()
-
-const mongoose = require("mongoose")
 
 const User = require("./models/userModel")
 
@@ -32,13 +37,13 @@ const {getUserHandler,
 const {getProductHandler,
     createProductHandler} = require("./controller/productController")
 
-const userRouter = require("./router/userRouter")
-
 app.use(express.json())
 // console.log(userData)
 
 /** mongodb connection */
-mongoose.connect(process.env.DB_URL).then((connection => {
+mongoose
+    .connect(process.env.DB_URL)
+    .then((connection => {
     console.log("Connected to DB")
 })).catch((err)=>{
     console.log(err)
@@ -69,8 +74,11 @@ app.use("/api/users",userRouter)
 
 /** Product Routes */
 
+app.use("/api/products",productRouter)
+
 app.get("/api/products",getProductHandler)
 app.post("/api/products",createProductHandler)
+
 app.use("/search", (req,res) => {
     console.log(req.query)
     res.status(200).json({
@@ -78,5 +86,7 @@ app.use("/search", (req,res) => {
         data: req.query
     })
 })
+
+app.get("/api")
 
 app.listen(process.env.PORT, () => console.log(`Listening at ${process.env.PORT}`))
