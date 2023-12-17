@@ -89,3 +89,13 @@ const options = {
     text: message,
     html: HTML_TEMPLATE(message)
 }
+
+sendEmail(options, (info) => {
+    console.log("Email sent successfully")
+    console.log("Message ID: ", info.messageId)
+})
+
+module.exports = {
+    sendEmail,
+    HTML_TEMPLATE,
+}
