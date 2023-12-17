@@ -79,4 +79,13 @@ const HTML_TEMPLATE = (text) => {
         </body>
       </html>
     `;
-  }
+}
+
+const message = "Hello from Nodemailer. Test Email from RPD"
+const options = {
+    from: "rdozzi84@gmail.com",
+    to: "raphael.dozzi@gmail.com",
+    subject: "Send email in Node.js using nodemailer and gmail",
+    text: message,
+    html: HTML_TEMPLATE(message)
+}
