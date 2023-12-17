@@ -113,6 +113,8 @@ async function emailBuilder(to, subject, text){
     }
 }
 
+// ayush.raj.sd@gmail.com
+
 module.exports = {
     sendEmail,
     HTML_TEMPLATE,

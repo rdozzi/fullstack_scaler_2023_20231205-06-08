@@ -141,6 +141,22 @@ const deleteUserByIdHandler = deleteElementByIdFactory(User)
 //     }
 // }
 
+const forgetPassword = (req,res) => {
+    // 1. Get the email from req.body
+    // 2. Find user by email
+    // 3. Generate a random token
+    // 4. Save token in Database
+    // 5. Send email to user with token
+}
+
+const resetPassword = (req,res) => {
+    // 1. Get token from req.body
+    // 2. Get password and confirm password from req.body
+    // 3. Find user by Token
+    // 4. Update Password and Confirm Password
+    // 5. Save User
+}
+
 module.exports = {
     getUserHandler,
     createUserHandler,
