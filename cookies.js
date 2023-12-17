@@ -22,9 +22,17 @@ app.get('/products', (req,res) => {
     // console.log(req)
     console.log(req.cookies)
     
-    res.json({
-        message: "Welcome to the products page",
-    })
+    const {pageVisited} = req.cookies
+
+    if(pageVisited){
+        res.json({
+            message: "Welcome to the Product Page"
+        })
+    }else{
+        res.json({
+            message: "You're visiting for the first time. Please Sign In / Sign Up"
+        })
+    }
 })
 
 app.get('/clearCookie',(req,res) => {
