@@ -95,6 +95,24 @@ sendEmail(options, (info) => {
     console.log("Message ID: ", info.messageId)
 })
 
+async function emailBuilder(to, subject, text){
+    try{
+        const options = {
+            from:"rdozzi84@gmail.com",
+            to:to,
+            subject:subject,
+            text:text,
+            html:HTML_TEMPLATE(text)
+        }
+        sendEmail(options, (info) => {
+            console.log("Email Sent Successfully")
+            console.log("Message ID:", info.messageId)
+        })
+    }catch(error){
+        console.log(error)
+    }
+}
+
 module.exports = {
     sendEmail,
     HTML_TEMPLATE,
