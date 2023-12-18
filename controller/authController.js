@@ -215,6 +215,28 @@ const isAdmin = async (req, res, next) => {
     }
   };
 
+const isAuthorized = (allowedRoles) => {
+    // return function which will be called by express
+    // get userId from req.userId
+    // get user from database
+    // if user's roles fall in the allowedRoles then call next 
+    return async function (req, res, next){
+        const userId = req.userId;
+        console.log(userId);
+        const user = await User.findById(userId);    
+        console.log(user);
+        if(allowedRoles.includes(user.role)){
+            next();
+        }else {
+            res.status(401).json({
+                status:"failure",
+                message:"you are not authorized to perform this action"
+             
+            })
+        }
+    }
+}
+
   module.exports = {
     signupHandler,
     loginHandler,
@@ -222,4 +244,5 @@ const isAdmin = async (req, res, next) => {
     resetPassword,
     protectRoute,
     isAdmin,
+    isAuthorized,
   }
