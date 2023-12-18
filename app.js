@@ -14,6 +14,7 @@ const cookieParser = require("cookie-parser")
 
 const userRouter = require("./router/userRouter")   
 const productRouter = require('./router/productRouter')
+const authRouter = require('./router/authRouter')
 
 
 // With this file, we will begin operating on a file system in our folder.
@@ -77,6 +78,8 @@ app.use("/api/users",userRouter)
 /** Product Routes */
 
 app.use("/api/products",productRouter)
+
+app.use("/api/auth",authRouter)
 
 app.get("/api/products",getProductHandler)
 app.post("/api/products",createProductHandler)
