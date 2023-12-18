@@ -253,6 +253,6 @@ module.exports = {
     updateUserByIdHandler,
     deleteUserByIdHandler,
     checkInput,
-    forgetPassword,
-    resetPassword,
+    // forgetPassword,
+    // resetPassword,
 }
