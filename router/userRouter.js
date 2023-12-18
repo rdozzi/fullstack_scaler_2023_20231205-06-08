@@ -13,7 +13,7 @@ const {getUserHandler,
 const {checkInput} = require("../utils/crudFactory")
 
 /** User Routes */
-userRouter.get('/',getUserHandler)
+userRouter.get('/allUsers', protectRoute, isAdmin, getUserHandler)
 userRouter.post('/', checkInput, createUserHandler)
 userRouter.post('/forgetPassword',forgetPassword)
 userRouter.patch('/resetPassword/:userId',resetPassword)
