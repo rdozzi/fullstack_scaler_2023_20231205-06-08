@@ -1,20 +1,24 @@
-const express = require("express")
-const Product = require("../models/productModel")
+const express = require("express");
+const Product = require("../models/productModel");
 
 const {getProductHandler,
     createProductHandler,
     getProductByIdHandler,
     updateProductByIdHandler,
     deleteProductByIdHandler,
-    } = require("../controller/productController")
+    } = require("../controller/productController");
 
-const {checkInput} = require("../utils/crudFactory")
+const {checkInput} = require("../utils/crudFactory");
 
-const productRouter = express.Router()
+const {protectRoute, isAuthorized} = require("../controller/authController")
+
+const productRouter = express.Router();
+
+const productValidRoles = ["admin","seller"];
 
 /** Product Routes */
 productRouter.get('/',getProductHandler)
-productRouter.post('/', checkInput, createProductHandler)
+productRouter.post('/', checkInput, protectRoute, isAuthorized(productValidRoles), createProductHandler)
 productRouter.get('/bigBillionDay', getBigBillionDayProducts, getAllProducts)
 productRouter.get('/:id',getProductByIdHandler)
 productRouter.patch('/:id',updateProductByIdHandler)
