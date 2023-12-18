@@ -145,104 +145,106 @@ const deleteUserByIdHandler = deleteElementByIdFactory(User)
 //     }
 // }
 
-const otpGenerator = () => {
-    return Math.floor(100000 * Math.random() * 900000)
-}
+// const otpGenerator = () => {
+//     return Math.floor(100000 * Math.random() * 900000)
+// }
 
-const forgetPassword = async (req,res) => {
-    // 2. Find user by email
-    // 3. Generate a random token
-    // 4. Save token in Database
-    // 5. Send email to user with token
-    try{
-        // 1. Get the email from req.body
-        const {email} = req.body
-        const user = await User.findOne({email})
-        console.log(user.name)
-        if(!user){
-            return res.status(404).json({
-                status:"Fail",
-                message:"User is not found"
-            })
-        }else{
-            const token = otpGenerator()
-            console.log("Token",token)
-            user.token = token
-            user.otpExpiry = Date.now() + 5 * 60 * 1000 // 5 minutes
+// const forgetPassword = async (req,res) => {
+//     // 2. Find user by email
+//     // 3. Generate a random token
+//     // 4. Save token in Database
+//     // 5. Send email to user with token
+//     try{
+//         // 1. Get the email from req.body
+//         const {email} = req.body
+//         const user = await User.findOne({email})
+//         console.log(user.name)
+//         if(!user){
+//             return res.status(404).json({
+//                 status:"Fail",
+//                 message:"User is not found"
+//             })
+//         }else{
+//             const token = otpGenerator()
+//             console.log("Token",token)
+//             user.token = token
+//             user.otpExpiry = Date.now() + 5 * 60 * 1000 // 5 minutes
 
-            console.log("Updated user",user)
-            await user.save()
-            //Send Email to User
-            emailBuilder(user.email,"Reset Password",`Your OTP is ${token}`)
-            .then( () => {
-                console.log("Email sent successfully")
-                res.status(200).json({
-                    status:"Success",
-                    message:"Email sent successfully",
-                    data:user
-                })
-            })
-            .catch((error)=>{
-                console.log(error)
-            })
-            res.status(200).json({
-                status:"Success",
-                message:"Email sent successfully",
-                data:user
-            })
-        }
+//             console.log("Updated user",user)
+//             await user.save()
+//             //Send Email to User
+//             emailBuilder(user.email,"Reset Password",`Your OTP is ${token}`)
+//             .then( () => {
+//                 console.log("Email sent successfully")
+//                 res.status(200).json({
+//                     status:"Success",
+//                     message:"Email sent successfully",
+//                     data:user
+//                 })
+//             })
+//             .catch((error)=>{
+//                 console.log(error)
+//             })
+//             res.status(200).json({
+//                 status:"Success",
+//                 message:"Email sent successfully",
+//                 data:user
+//             })
+//         }
 
 
-    }catch(error){
+//     }catch(error){
 
-    }
-}
+//     }
+// }
+// Moved to authController
 
-const resetPassword = async (req,res) => {
-    // 4. Update Password and Confirm Password
-    // 5. Save User
-    try{
-        // 1. Get token from req.body
-        // 2. Get password and confirm password from req.body
-        const {token,password,email} = req.body
-        const {userId} = req.params
-        const user = await User.findById(userId)
-        if(!user){
-            return res.status(400).json({
-                status:"Fail",
-                message:"User not found"
-            })
-        }
-        // 3. Verify the Validity of Token
-        if(user.token !== token){
-            return res(400).json({
-                status:"fail",
-                message:"Invalid Token"
-            })
-        }else{
-            // check expiry time of token
-            if(user.otpExpiry < Date.now()){
-                return res.status(400).json({
-                    status:"Fail",
-                    message:"Token Expired"
-                })
-            }else{
-                user.password = password
-                user.token = undefined
-                user.otpExpiry = undefined
-                await user.save()
-                res.status(200).json({
-                    status:"success",
-                    message:"Password updated successfully",
-                    data:user
-                })
-            }
-        }
+// const resetPassword = async (req,res) => {
+//     // 4. Update Password and Confirm Password
+//     // 5. Save User
+//     try{
+//         // 1. Get token from req.body
+//         // 2. Get password and confirm password from req.body
+//         const {token,password,email} = req.body
+//         const {userId} = req.params
+//         const user = await User.findById(userId)
+//         if(!user){
+//             return res.status(400).json({
+//                 status:"Fail",
+//                 message:"User not found"
+//             })
+//         }
+//         // 3. Verify the Validity of Token
+//         if(user.token !== token){
+//             return res(400).json({
+//                 status:"fail",
+//                 message:"Invalid Token"
+//             })
+//         }else{
+//             // check expiry time of token
+//             if(user.otpExpiry < Date.now()){
+//                 return res.status(400).json({
+//                     status:"Fail",
+//                     message:"Token Expired"
+//                 })
+//             }else{
+//                 user.password = password
+//                 user.token = undefined
+//                 user.otpExpiry = undefined
+//                 await user.save()
+//                 res.status(200).json({
+//                     status:"success",
+//                     message:"Password updated successfully",
+//                     data:user
+//                 })
+//             }
+//         }
 
-    }catch(error){
-        console.log(error)
-    }
-}
+//     }catch(error){
+//         console.log(error)
+//     }
+// }
+// Moved to authController
 
 module.exports = {
     getUserHandler,
