@@ -44,6 +44,9 @@ const userSchema = new mongoose.Schema({
             message: "Password and Confirm Password should be same."
         }
     },
+    role:{
+        type:String
+    },
     token:String,
     otpExpiry:Date,
 })
