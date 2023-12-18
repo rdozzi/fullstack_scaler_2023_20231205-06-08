@@ -1,22 +1,17 @@
 const express = require("express")
 
-const userRouter = express.Router()
-
 const {getUserHandler,
-    createUserHandler,
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
     } = require("../controller/userController")
 
-const {isAdmin, 
-    protectRoute, 
-    signupHandler, 
-    loginHandler,
-    forgetPassword, 
-    resetPassword,} = require("../controller/authController")
+const {isAdmin, protectRoute} = require("../controller/authController")
 
 const {checkInput} = require("../utils/crudFactory")
+
+const userRouter = express.Router()
+userRouter.use(protectRoute) //add autthentification middleware for all user routes
 
 /** User Routes */
 userRouter.get('/allUsers', protectRoute, isAdmin, getUserHandler)
