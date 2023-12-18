@@ -10,6 +10,7 @@ const app = express()
 require("dotenv").config()
 
 const mongoose = require("mongoose")
+const cookieParser = require("cookie-parser")
 
 const userRouter = require("./router/userRouter")   
 const productRouter = require('./router/productRouter')
@@ -38,6 +39,7 @@ const {getProductHandler,
     createProductHandler} = require("./controller/productController")
 
 app.use(express.json())
+app.use(cookieParser())
 // console.log(userData)
 
 /** mongodb connection */
