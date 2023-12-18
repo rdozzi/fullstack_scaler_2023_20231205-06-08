@@ -195,7 +195,7 @@ const protectRoute = async (req, res, next) => {
     }
   };
 
-  const isAdmin = async (req, res, next) => {
+const isAdmin = async (req, res, next) => {
     // get userId from req.userId
     // authorise user to see the user data
     // get user from database
