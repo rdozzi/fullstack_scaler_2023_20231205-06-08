@@ -4,7 +4,7 @@ const {
     loginHandler,
     forgetPassword,
     resetPassword,
-    // logoutHandler
+    logoutHandler
   } = require("../controller/authController");
 
 const authRouter = express.Router();
@@ -13,7 +13,7 @@ const authRouter = express.Router();
 
 authRouter.post("/signup", signupHandler);
 authRouter.post("/login", loginHandler);
-// authRouter.get('/logout', logoutHandler);
+authRouter.get('/logout', logoutHandler);
 authRouter.post("/forgetPassword", forgetPassword);
 authRouter.patch("/resetPassword/:userId", resetPassword);
 

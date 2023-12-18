@@ -237,6 +237,14 @@ const isAuthorized = (allowedRoles) => {
     }
 }
 
+const logoutHandler = async (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json({
+      status: "success",
+      message: "logged out successfully",
+    }); 
+ }
+
   module.exports = {
     signupHandler,
     loginHandler,
@@ -245,4 +253,5 @@ const isAuthorized = (allowedRoles) => {
     protectRoute,
     isAdmin,
     isAuthorized,
+    logoutHandler,
   }
