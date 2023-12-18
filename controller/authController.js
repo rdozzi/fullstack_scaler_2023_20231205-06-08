@@ -172,3 +172,27 @@ const resetPassword = async (req,res) => {
         console.log(error)
     }
 }
+
+const protectRoute = async (req, res, next) => {
+    // get token from cookies
+    // verify token
+    // get user from database
+    // if user exists then call next
+    try {
+      const token = req.cookies.token;
+      const decoded = jwt.verify(token, SECRET);
+      if (decoded) {
+        const userId = decoded.id;
+        req.userId = userId;
+        next();
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        status: "failure",
+        message: err.message,
+      });
+    }
+  };
+
+  
