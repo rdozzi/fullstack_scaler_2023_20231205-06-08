@@ -7,10 +7,14 @@ const {getUserHandler,
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
-    // forgetPassword, resetPassword,
     } = require("../controller/userController")
 
-const {isAdmin, protectRoute, signupHandler, loginHandler} = require("../controller/authController")
+const {isAdmin, 
+    protectRoute, 
+    signupHandler, 
+    loginHandler,
+    forgetPassword, 
+    resetPassword,} = require("../controller/authController")
 
 const {checkInput} = require("../utils/crudFactory")
 

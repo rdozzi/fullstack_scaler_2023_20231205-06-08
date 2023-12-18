@@ -1,9 +1,10 @@
 /** Authentication Relatted Handlers */
 
-const userModel = require("../model/userModel"); 
-const jwt = require("jsonwebtoken")
-const { SECRET_KEY } = process.env
-const {emailBuilder} = require("../nodemailer")
+const UserModel = require("../models/userModel"); 
+const jwt = require("jsonwebtoken");
+const { SECRET_KEY } = process.env;
+const {emailBuilder} = require("../nodemailer");
+const User = require("../models/userModel");
 
 const otpGenerator = () => {
     return Math.floor(100000 * Math.random() * 900000)
@@ -20,6 +21,7 @@ const signupHandler = async function (req, res) {
         message: "user created successfully",
         user: newUser,
         status: "success",
+
       });
     } catch (err) {
       console.log(err);
@@ -180,7 +182,7 @@ const protectRoute = async (req, res, next) => {
     // if user exists then call next
     try {
       const token = req.cookies.token;
-      const decoded = jwt.verify(token, SECRET);
+      const decoded = jwt.verify(token, SECRET_KEY);
       if (decoded) {
         const userId = decoded.id;
         req.userId = userId;
@@ -202,6 +204,7 @@ const isAdmin = async (req, res, next) => {
     // if user.role === "admin" then call next
     const userId = req.userId;
     const user = await User.findById(userId);
+
     if (user.role === "admin") {
       next();
     } else {
