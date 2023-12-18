@@ -211,3 +211,12 @@ const protectRoute = async (req, res, next) => {
       });
     }
   };
+
+  module.exports = {
+    signupHandler,
+    loginHandler,
+    forgetPassword,
+    resetPassword,
+    protectRoute,
+    isAdmin,
+  }
