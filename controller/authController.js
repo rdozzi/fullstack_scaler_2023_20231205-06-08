@@ -195,4 +195,19 @@ const protectRoute = async (req, res, next) => {
     }
   };
 
-  
+  const isAdmin = async (req, res, next) => {
+    // get userId from req.userId
+    // authorise user to see the user data
+    // get user from database
+    // if user.role === "admin" then call next
+    const userId = req.userId;
+    const user = await User.findById(userId);
+    if (user.role === "admin") {
+      next();
+    } else {
+      res.status(403).json({
+        status: "failure",
+        message: "only admins can perform this action",
+      });
+    }
+  };
