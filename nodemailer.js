@@ -90,10 +90,10 @@ const options = {
     html: HTML_TEMPLATE(message)
 }
 
-sendEmail(options, (info) => {
-    console.log("Email sent successfully")
-    console.log("Message ID: ", info.messageId)
-})
+// sendEmail(options, (info) => {
+//     console.log("Email sent successfully")
+//     console.log("Message ID: ", info.messageId)
+// })
 
 async function emailBuilder(to, subject, text){
     try{

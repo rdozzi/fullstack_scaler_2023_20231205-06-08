@@ -1,5 +1,5 @@
 const User = require("../models/userModel")
-const { emailBuilder } = require("../nodemailer")
+
 const {checkInput, 
     getAllFactory, 
     createFactory, 
@@ -7,6 +7,8 @@ const {checkInput,
     updateElementByIdFactory,
     deleteElementByIdFactory} = require("../utils/crudFactory")
 
+
+const { emailBuilder } = require("../nodemailer")
 
 // Called from crudFactory
 // const checkInput = function (req,res,next){
@@ -156,7 +158,7 @@ const forgetPassword = async (req,res) => {
         // 1. Get the email from req.body
         const {email} = req.body
         const user = await User.findOne({email})
-        console.log(user)
+        console.log(user.name)
         if(!user){
             return res.status(404).json({
                 status:"Fail",
@@ -166,7 +168,8 @@ const forgetPassword = async (req,res) => {
             const token = otpGenerator()
             console.log("Token",token)
             user.token = token
-            user.otpExpiry = Date.now() * 60 * 60 * 1000
+            user.otpExpiry = Date.now() + 5 * 60 * 1000 // 5 minutes
+
             console.log("Updated user",user)
             await user.save()
             //Send Email to User
