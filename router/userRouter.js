@@ -1,6 +1,7 @@
 const express = require("express")
 
 const {getUserHandler,
+    createUserHandler,
     getUserByIdHandler,
     updateUserByIdHandler,
     deleteUserByIdHandler,
@@ -15,6 +16,7 @@ userRouter.use(protectRoute) //add autthentification middleware for all user rou
 
 /** User Routes */
 userRouter.get('/allUsers', protectRoute, isAdmin, getUserHandler)
+userRouter.post('/', checkInput, createUserHandler)
 userRouter.get('/:id',getUserByIdHandler)
 userRouter.patch('/:id',updateUserByIdHandler)
 userRouter.delete('/:id',deleteUserByIdHandler)
