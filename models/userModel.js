@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt")
 
 /**
  * Require vs Imports
@@ -60,7 +61,7 @@ const validRoles = ["admin","user","sales"];
 
 userSchema.pre("save",async function(next){
     console.log("cf",this.confirmPassword)
-    console.log("pasasword",this.password)
+    console.log("password",this.password)
 
     if(this.password !== this.confirmPassword){
         next(new Error("Password and Confirm Password must be identical"));
