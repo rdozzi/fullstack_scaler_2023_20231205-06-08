@@ -23,16 +23,6 @@ const productSchema = new mongoose.Schema({
         type:[String]
     },
 
-    stock: {
-        type:Number,
-        required:[true,'A product must have a stock'],
-    },
-
-    brand:{
-        type:String,
-        required:[true,'A product must have a brand'],
-    },
-
     images: {
         type:[String]
         // Not required
@@ -51,7 +41,18 @@ const productSchema = new mongoose.Schema({
     description: {
         type:String,
         required:[true,'A product must have a description']
-    }
+    },
+
+    stock: {
+        type:Number,
+        required:[true,'A product must have a stock'],
+    },
+
+    brand:{
+        type:String,
+        required:[true,'A product must have a brand'],
+    },
+
 })
 
 const validProductCategories = ['electronics','stationary','clothing','furniture']
