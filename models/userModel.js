@@ -67,6 +67,13 @@ userSchema.pre("save",async function(next){
     }
 
     this.confirmPassword = undefined;
+
+    /** Hash the user password here */
+    const saltRounds = 12
+    const hashedPassword = await bcrypt.hash(this.password,saltRounds)
+    console.log("Hashed Password", hashedPassword)
+    this.password = hashedPassword
+
     if(this.role){
         console.log(this.role);
         const isValid = validRoles.includes(this.role);
