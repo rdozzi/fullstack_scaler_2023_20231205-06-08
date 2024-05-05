@@ -50,6 +50,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:"user"
     },
+    bookings:{
+        type:[mongoose.Schema.ObjectId],
+        ref:"Booking"
+    }
 });
 
 const validRoles = ["admin","user","sales"];
