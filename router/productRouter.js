@@ -17,9 +17,10 @@ const productRouter = express.Router();
 const productValidRoles = ["admin","seller"];
 
 /** Product Routes */
-productRouter.get('/',getProductHandler)
+// productRouter.get('/',getProductHandler)
+productRouter.get('/',getAllProducts)
 productRouter.post('/', checkInput, protectRoute, isAuthorized(productValidRoles), createProductHandler)
-productRouter.get('/bigBillionDay', getBigBillionDayProducts, getAllProducts)
+productRouter.get('/bigBillionDay', getBigBillionDayProducts, getAllProducts) //Share the same req object
 productRouter.get('/:id',getProductByIdHandler)
 productRouter.patch('/:id',updateProductByIdHandler)
 productRouter.delete('/:id',deleteProductByIdHandler)
@@ -31,6 +32,7 @@ async function getAllProducts(req, res) {
     console.log("sort",sort)  
     if (sort) {
       const [sortParam, order] = sort.split(" ");
+      console.log(sortParam,order)
       if (order === "asc") {
         queryPromise = queryPromise.sort(sortParam);
       } else {
@@ -79,7 +81,7 @@ async function getAllProducts(req, res) {
 
 async function getBigBillionDayProducts(req,res,next){
   console.log("getBillionDollarProducts")
-  req.query.filter = JSON.stringify({stock: {lte: 10}})
+  req.query.filter = JSON.stringify({stock: {lte: 10}}) // Parse breaks with dollar sign
   next()
 }
 
