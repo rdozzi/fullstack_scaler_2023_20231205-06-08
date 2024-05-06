@@ -23,6 +23,7 @@
     "mongoose": "^8.0.2",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.2",
-    "short-uuid": "^4.2.2"
+    "short-uuid": "^4.2.2",
+    "stripe": "^15.5.0"
   }
 }
