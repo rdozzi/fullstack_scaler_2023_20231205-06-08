@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer")
+const { getMaxListeners } = require("./models/productModel")
 require("dotenv").config()
 
 // Create Transporter Object
@@ -114,6 +115,8 @@ async function emailBuilder(to, subject, text){
 }
 
 // ayush.raj.sd@gmail.com
+
+emailBuilder(options.to, options.subject, options.message)
 
 module.exports = {
     sendEmail,
